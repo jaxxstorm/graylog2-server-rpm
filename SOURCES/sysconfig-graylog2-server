@@ -1,0 +1,7 @@
+# Set custom variables for the init script and start up
+# for graylog2-server here!
+#path to your java executable
+#JAVA=/usr/bin/java
+User to run graylog2 as
+#GL_USER=graylog2
+

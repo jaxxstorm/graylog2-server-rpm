@@ -102,15 +102,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/graylog2/server/bin
 %dir /opt/graylog2/server/log
 %dir /opt/graylog2/server/plugin
+%{_sysconfdir}/graylog2/graylog2.conf
+%config(noreplace) %{_sysconfdir}/graylog2
+%doc README.markdown
+%defattr(-,graylog2,graylog2,-)
 /opt/graylog2/server/graylog2-server.jar
 /opt/graylog2/server/bin/graylog2ctl
 /opt/graylog2/server/COPYING
 /opt/graylog2/server/build_date
 /opt/graylog2/server/README.markdown
-%{_sysconfdir}/graylog2/graylog2.conf
-%config(noreplace) %{_sysconfdir}/graylog2
-%doc README.markdown
-%defattr(-,graylog2,graylog2,-)
 %dir %{_localstatedir}/log/graylog2
 
 %changelog

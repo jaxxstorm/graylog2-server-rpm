@@ -21,33 +21,34 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC="Graylog2 Server"
 NAME=graylog2-server
 JAR_FILE=/opt/graylog2/server/graylog2-server.jar
-DAEMON=/usr/bin/java
+JAVA=/usr/bin/java
 PID_FILE=/var/run/$NAME.pid
-DAEMON_ARGS="-jar $JAR_FILE -p $PID_FILE -f /etc/graylog2/server.conf"
+JAVA_ARGS="-jar $JAR_FILE -p $PID_FILE -f /etc/graylog2/server.conf"
 SCRIPTNAME=/etc/init.d/$NAME
+LOCKFILE=/var/lock/subsys/$NAME
+GL_USER=graylog2
 RUN=no
 
 # Exit if the package is not installed
 [ -e "$JAR_FILE" ] || exit 0
-[ -x "$DAEMON" ] || exit 0
-
+[ -x "$JAVA" ] || exit 0
 
 start() {
     echo -n $"Starting ${NAME}: "
-    daemon --pidfile=${PID_FILE} \
-        $DAEMON $DAEMON_ARGS >> /var/log/graylog2/server.log &
+    daemon --pidfile=${PID_FILE} --user $USER \
+        $JAVA $JAVA_ARGS >> /var/log/graylog2/server.log &
     RETVAL=$?
     echo
-    [ $RETVAL -eq 0 ]
+    [ $RETVAL -eq 0 ] && touch $LOCKFILE
     return $RETVAL
 }
 
 stop() {
     echo -n $"Stopping ${NAME}: "
-    killproc -p ${PID_FILE} -d 10 $DAEMON
+    killproc -p ${PID_FILE} -d 10 $JAVA
     RETVAL=$?
     echo
-    [ $RETVAL = 0 ] && rm -f ${PID_FILE}
+    [ $RETVAL = 0 ] && rm -f ${PID_FILE} && rm -f ${LOCKFILE}
     return $RETVAL
 }
 
