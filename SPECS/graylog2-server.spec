@@ -65,6 +65,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__install} -m 755 %{SOURCE1} %{buildroot}%{_sysconfdir}/init.d/%{name}
 %{__install} -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 
+#Docs and other stuff
+%{__install} -p -m 644 COPYING %{buildroot}/opt/graylog2/server
+%{__install} -p -m 644 build_date %{buildroot}/opt/graylog2/server
+%{__install} -p -m 644 README.markdown %{buildroot}/opt/graylog2/server
 
 %pre
 # create elasticsearch group
@@ -100,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/graylog2/server/plugin
 /opt/graylog2/server/graylog2-server.jar
 /opt/graylog2/server/bin/graylog2ctl
+/opt/graylog2/server/COPYING
+/opt/graylog2/server/build_date
+/opt/graylog2/server/README.markdown
 %{_sysconfdir}/graylog2/graylog2.conf
 %config(noreplace) %{_sysconfdir}/graylog2
 %doc README.markdown
@@ -108,5 +115,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Wed Nov 04 2013 lee@leebriggs.co.uk 0.20.0.07-1
-- Initial Attempt
+- Initial RPM
 
