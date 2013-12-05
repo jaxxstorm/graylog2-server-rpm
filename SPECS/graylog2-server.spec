@@ -44,7 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # config
 %{__mkdir} -p %{buildroot}%{_sysconfdir}/graylog2
-%{__install} -m 644 graylog2.conf.example %{buildroot}%{_sysconfdir}/graylog2/graylog2.conf
+%{__install} -m 644 graylog2.conf.example %{buildroot}%{_sysconfdir}/graylog2/server.conf
 
 
 # logs
@@ -102,7 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/graylog2/server/bin
 %dir /opt/graylog2/server/log
 %dir /opt/graylog2/server/plugin
-%{_sysconfdir}/graylog2/graylog2.conf
+%{_sysconfdir}/graylog2/server.conf
 %config(noreplace) %{_sysconfdir}/graylog2
 %doc README.markdown
 %defattr(-,graylog2,graylog2,-)
