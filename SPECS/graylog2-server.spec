@@ -12,6 +12,7 @@ URL:            http://www.graylog2.org
 Source0:        graylog2-server-0.20.0-preview.7.tgz
 Source1:        init.d-%{name}
 Source2:        sysconfig-%{name}
+Source3:        log4j.xml
 BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -50,6 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 # logs
 %{__mkdir} -p %{buildroot}%{_localstatedir}/log/graylog2/web
 %{__mkdir} -p %{buildroot}/opt/graylog2/server/log
+%{__install} -p -m 644 %{SOURCE3} %{buildroot}/opt/graylog2/server/log4j.xml
 
 # plugins
 %{__mkdir} -p %{buildroot}/opt/graylog2/server/plugin/alarm_callbacks
@@ -108,8 +110,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,graylog2,graylog2,-)
 /opt/graylog2/server/graylog2-server.jar
 /opt/graylog2/server/bin/graylog2ctl
+/opt/graylog2/server/log4j.xml
 /opt/graylog2/server/COPYING
 /opt/graylog2/server/build_date
+
 /opt/graylog2/server/README.markdown
 %dir %{_localstatedir}/log/graylog2
 

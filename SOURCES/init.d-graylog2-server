@@ -23,7 +23,7 @@ NAME=graylog2-server
 JAR_FILE=/opt/graylog2/server/graylog2-server.jar
 JAVA=/usr/bin/java
 PID_FILE=/var/run/$NAME.pid
-JAVA_ARGS="-jar $JAR_FILE -p $PID_FILE -f /etc/graylog2/server.conf"
+JAVA_ARGS="-jar -Dlog4j.configuration=file:///opt/graylog2/server/log4j.xml $JAR_FILE -p $PID_FILE -f /etc/graylog2/server.conf"
 SCRIPTNAME=/etc/init.d/$NAME
 LOCKFILE=/var/lock/subsys/$NAME
 GL_USER=graylog2
@@ -35,11 +35,12 @@ RUN=no
 
 start() {
     echo -n $"Starting ${NAME}: "
-    daemon --pidfile=${PID_FILE} --user $USER \
-        $JAVA $JAVA_ARGS >> /var/log/graylog2/server.log &
+    daemon --check $JAVA --pidfile=${PID_FILE} --user $USER \
+        $JAVA $JAVA_ARGS &
     RETVAL=$?
-    echo
-    [ $RETVAL -eq 0 ] && touch $LOCKFILE
+    echo 
+    sleep 2
+    [ $RETVAL = 0 ] && touch ${LOCKFILE}
     return $RETVAL
 }
 
