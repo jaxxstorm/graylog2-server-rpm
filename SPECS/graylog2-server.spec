@@ -3,7 +3,7 @@
 
 Name:           graylog2-server
 Version:        0.20.0.07
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        graylog2-server
 
 Group:          System Environment/Daemons
@@ -118,6 +118,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/graylog2
 
 %changelog
-* Wed Nov 04 2013 lee@leebriggs.co.uk 0.20.0.07-1
+* Fri Dec 10 2013 lee@leebriggs.co.uk 0.20.0.07-2
+- updated comments
+* Wed Dec 04 2013 lee@leebriggs.co.uk 0.20.0.07-1
 - Initial RPM
 
