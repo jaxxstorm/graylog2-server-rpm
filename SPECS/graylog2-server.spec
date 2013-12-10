@@ -73,12 +73,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__install} -p -m 644 README.markdown %{buildroot}/opt/graylog2/server
 
 %pre
-# create elasticsearch group
+# create graylog2 group
 if ! getent group graylog2 >/dev/null; then
         groupadd -r graylog2
 fi
 
-# create elasticsearch user
+# create graylog2 user
 if ! getent passwd graylog2 >/dev/null; then
         useradd -r -g graylog2 -d %{_javadir}/%{name} \
             -s /sbin/nologin -c "Party Gorilla" graylog2
