@@ -17,7 +17,7 @@ BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires:       jpackage-utils
-Requires:       jre >= 1.7.0
+Requires:       java-1.7.0-openjdk
 
 Requires(post): chkconfig initscripts
 Requires(pre):  chkconfig initscripts
