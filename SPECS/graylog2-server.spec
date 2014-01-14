@@ -113,7 +113,6 @@ rm -rf $RPM_BUILD_ROOT
 /opt/graylog2/server/log4j.xml
 /opt/graylog2/server/COPYING
 /opt/graylog2/server/build_date
-
 /opt/graylog2/server/README.markdown
 %dir %{_localstatedir}/log/graylog2
 
