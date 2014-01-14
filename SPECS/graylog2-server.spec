@@ -71,7 +71,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__install} -p -m 644 COPYING %{buildroot}/opt/graylog2/server
 %{__install} -p -m 644 build_date %{buildroot}/opt/graylog2/server
 %{__install} -p -m 644 README.markdown %{buildroot}/opt/graylog2/server
-
+%{__mkdir} -p %{buildroot}/var/run/graylog2
 %pre
 # create graylog2 group
 if ! getent group graylog2 >/dev/null; then
@@ -114,6 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 /opt/graylog2/server/COPYING
 /opt/graylog2/server/build_date
 /opt/graylog2/server/README.markdown
+/var/run/graylog2
 %dir %{_localstatedir}/log/graylog2
 
 %changelog
