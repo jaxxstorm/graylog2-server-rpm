@@ -35,7 +35,7 @@ RUN=no
 
 start() {
     echo -n $"Starting ${NAME}: "
-    daemon --check $JAVA --pidfile=${PID_FILE} --user $USER \
+    daemon --check $JAVA --pidfile=${PID_FILE} --user=$GL_USER \
         $JAVA $JAVA_ARGS &
     RETVAL=$?
     echo 
