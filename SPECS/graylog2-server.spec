@@ -17,7 +17,8 @@ BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires:       jpackage-utils
-Requires:       java-1.7.0-openjdk
+Requires:       java7
+Requires:       daemonize
 
 Requires(post): chkconfig initscripts
 Requires(pre):  chkconfig initscripts
@@ -115,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 /opt/graylog2/server/build_date
 /opt/graylog2/server/README.markdown
 /var/run/graylog2
-%dir %{_localstatedir}/log/graylog2
+%attr(-,graylog2,graylog2) %dir %{_localstatedir}/log/graylog2
 
 %changelog
 * Tue Jan 21 2014 lee@leebriggs.co.uk 0.20.0-rc1.1
