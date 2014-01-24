@@ -10,6 +10,7 @@
 ### END INIT INFO
 
 # Author: Lee Briggs <lee@leebriggs.co.uk>
+# Contributor: Zac Sprackett <zac@sprackett.com>
 
 # Source function library.
 . /etc/rc.d/init.d/functions
@@ -20,36 +21,47 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC="Graylog2 Server"
 NAME=graylog2-server
+
 JAR_FILE=/opt/graylog2/server/graylog2-server.jar
-JAVA=/usr/bin/java
-PID_FILE=/var/run/graylog2/$NAME.pid
-JAVA_ARGS="-jar -Dlog4j.configuration=file:///opt/graylog2/server/log4j.xml $JAR_FILE -p $PID_FILE -f /etc/graylog2/server.conf"
-SCRIPTNAME=/etc/init.d/$NAME
+NFILES=${NFILES:-32768}
+
+PID_FILE=${PID_FILE:-/var/run/graylog2/$NAME.pid}
+CONFIG_FILE=${CONFIG_FILE:-/etc/graylog2/server.conf}
+JAVA_OPTS=${JAVA_OPTS:--Dlog4j.configuration=file:///opt/graylog2/server/log4j.xml}
 LOCKFILE=/var/lock/subsys/$NAME
 GL_USER=graylog2
-RUN=no
 
-# Exit if the package is not installed
-[ -e "$JAR_FILE" ] || exit 0
-[ -x "$JAVA" ] || exit 0
+if [ -x "$JAVA_HOME/bin/java" ]; then
+    JAVA=$JAVA_HOME/bin/java
+else
+    JAVA=`which java`
+fi
 
 start() {
     echo -n $"Starting ${NAME}: "
-    daemon --check $JAVA --pidfile=${PID_FILE} --user=$GL_USER \
-        $JAVA $JAVA_ARGS &
+    ulimit -n $NFILES
+    daemonize -u $GL_USER -l /var/lock/subsys/graylog2 \
+        $JAVA $JAVA_OPTS -jar $JAR_FILE \
+        -a -o /var/log/$NAME/graylog2-server.log \
+        $GRAYLOG2_OPTS \
+        --pidfile $PID_FILE -f $CONFIG_FILE
+
     RETVAL=$?
-    echo 
-    sleep 2
-    [ $RETVAL = 0 ] && touch ${LOCKFILE}
+    if [ $? -eq 0 ]; then
+        echo_success
+    else
+        echo_failure
+    fi
+    echo
     return $RETVAL
 }
 
 stop() {
     echo -n $"Stopping ${NAME}: "
-    killproc -p ${PID_FILE} -d 10 $JAVA
+    killproc -p ${PID_FILE} -d 30
     RETVAL=$?
     echo
-    [ $RETVAL = 0 ] && rm -f ${PID_FILE} && rm -f ${LOCKFILE}
+    [ $RETVAL = 0 ] && rm -f ${PID_FILE}
     return $RETVAL
 }
 
