@@ -1,7 +1,13 @@
 # Set custom variables for the init script and start up
 # for graylog2-server here!
-#path to your java executable
+
+# path to your java executable
 #JAVA=/usr/bin/java
-User to run graylog2 as
+
+# user to run graylog2
+# defaults to "graylog2" if not set here
+# make sure to use "root" if you want inputs on ports <1024
 #GL_USER=graylog2
 
+# heap size configuration
+GL_HEAP_SIZE="-Xms1024M -Xmx1024M"

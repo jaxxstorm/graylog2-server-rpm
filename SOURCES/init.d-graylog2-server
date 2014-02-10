@@ -10,12 +10,10 @@
 ### END INIT INFO
 
 # Author: Lee Briggs <lee@leebriggs.co.uk>
+# Contributor: Sandro Roth <sandro.roth@gmail.com>
 
 # Source function library.
 . /etc/rc.d/init.d/functions
-
-# Pull in sysconfig settings
-[ -f /etc/sysconfig/graylog2 ] && . /etc/sysconfig/graylog2
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC="Graylog2 Server"
@@ -27,7 +25,9 @@ JAVA_ARGS="-jar -Dlog4j.configuration=file:///opt/graylog2/server/log4j.xml $JAR
 SCRIPTNAME=/etc/init.d/$NAME
 LOCKFILE=/var/lock/subsys/$NAME
 GL_USER=graylog2
-RUN=no
+
+# Pull in sysconfig settings
+[ -f /etc/sysconfig/${NAME} ] && . /etc/sysconfig/${NAME}
 
 # Exit if the package is not installed
 [ -e "$JAR_FILE" ] || exit 0
@@ -36,9 +36,9 @@ RUN=no
 start() {
     echo -n $"Starting ${NAME}: "
     daemon --check $JAVA --pidfile=${PID_FILE} --user=$GL_USER \
-        $JAVA $JAVA_ARGS &
+        $JAVA $GL_HEAP_SIZE $JAVA_ARGS &
     RETVAL=$?
-    echo 
+    echo
     sleep 2
     [ $RETVAL = 0 ] && touch ${LOCKFILE}
     return $RETVAL
