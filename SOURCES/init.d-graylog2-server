@@ -25,7 +25,7 @@ JAVA_ARGS="-jar -Dlog4j.configuration=file:///opt/graylog2/server/log4j.xml $JAR
 SCRIPTNAME=/etc/init.d/$NAME
 LOCKFILE=/var/lock/subsys/$NAME
 GL_USER=graylog2
-
+GL_HEAP_SIZE="-Xms1024M -Xmx1024M"
 # Pull in sysconfig settings
 [ -f /etc/sysconfig/${NAME} ] && . /etc/sysconfig/${NAME}
 
@@ -35,7 +35,7 @@ GL_USER=graylog2
 
 start() {
     echo -n $"Starting ${NAME}: "
-    daemon --check $JAVA --pidfile=${PID_FILE} --user=$GL_USER \
+    daemon --check $JAVA --pidfile=${PID_FILE} --user=${GL_USER} \
         $JAVA $GL_HEAP_SIZE $JAVA_ARGS &
     RETVAL=$?
     echo

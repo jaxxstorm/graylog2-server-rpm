@@ -3,13 +3,13 @@
 
 Name:           graylog2-server
 Version:        0.20.0
-Release:        rc1.1%{?dist}
+Release:        rc2%{?dist}
 Summary:        graylog2-server
 
 Group:          System Environment/Daemons
 License:        ASL 2.0
 URL:            http://www.graylog2.org
-Source0:        graylog2-server-0.20.0-rc.1-1.tgz
+Source0:        graylog2-server-0.20.0-rc.2.tgz
 Source1:        init.d-%{name}
 Source2:        sysconfig-%{name}
 Source3:        log4j.xml
@@ -27,7 +27,7 @@ Requires(pre):  shadow-utils
 A distributed, highly available, RESTful search engine
 
 %prep
-%setup -q -n graylog2-server-0.20.0-rc.1-1
+%setup -q -n graylog2-server-0.20.0-rc.2
 #we have to use a specific name here until graylog starts using real version number
 #%setup -q -n %{name}-%{version}
 
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/graylog2
 
 %changelog
+* Mon Feb 10 2014 lee@leebriggs.co.uk 0.20.0-rc2
+- Some changes to the init script
+- Bumping for new release
 * Tue Jan 21 2014 lee@leebriggs.co.uk 0.20.0-rc1.1
 - Updating for Rc1.1 release
 * Tue Jan 14 2014 lee@leebriggs.co.uk 0.20.0-rc1
