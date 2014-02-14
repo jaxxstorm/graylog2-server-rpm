@@ -36,7 +36,7 @@ GL_HEAP_SIZE="-Xms1024M -Xmx1024M"
 start() {
     echo -n $"Starting ${NAME}: "
     daemon --check $JAVA --pidfile=${PID_FILE} --user=${GL_USER} \
-        $JAVA $GL_HEAP_SIZE $JAVA_ARGS &
+        $JAVA $GL_HEAP_SIZE $JAVA_ARGS $JAVA_EXTRA_ARGS &
     RETVAL=$?
     echo
     sleep 2
