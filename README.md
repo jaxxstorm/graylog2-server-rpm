@@ -16,7 +16,7 @@ This RPM requires some config after install. You'll need to ensure you have [ela
 
 Once these are running, edit the config values in /etc/graylog2/server.conf and run the start script 
 ```
-/etc/init.d/graylog2-server star
+/etc/init.d/graylog2-server start
 ```
 
 You can test your config values by running
