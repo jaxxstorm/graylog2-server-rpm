@@ -1,0 +1,13 @@
+/var/log/graylog2/server*.log {
+	su graylog2 graylog2
+	weekly
+	missingok
+	rotate 7
+	compress
+        dateext
+        dateformat .%Y-%m-%d
+	delaycompress
+	notifempty
+	sharedscripts
+	copytruncate
+}

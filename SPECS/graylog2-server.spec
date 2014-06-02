@@ -1,23 +1,26 @@
 %define debug_package %{nil}
 %define base_install_dir %{_javadir}{%name}
-
+%define __jar_repack %{nil
+}
 Name:           graylog2-server
-Version:        0.20.0
-Release:        rc2%{?dist}
+Version:        0.20.2
+Release:        1%{?dist}
 Summary:        graylog2-server
 
 Group:          System Environment/Daemons
 License:        ASL 2.0
 URL:            http://www.graylog2.org
-Source0:        graylog2-server-0.20.0-rc.2.tgz
+Source0:        graylog2-server-0.20.2.tgz
 Source1:        init.d-%{name}
 Source2:        sysconfig-%{name}
 Source3:        log4j.xml
+Source4:	logrotate-%{name}
 BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires:       jpackage-utils
 Requires:       java-1.7.0-openjdk
+Requires: 	logrotate
 
 Requires(post): chkconfig initscripts
 Requires(pre):  chkconfig initscripts
@@ -27,9 +30,8 @@ Requires(pre):  shadow-utils
 A distributed, highly available, RESTful search engine
 
 %prep
-%setup -q -n graylog2-server-0.20.0-rc.2
+%setup -q -n graylog2-server-0.20.2
 #we have to use a specific name here until graylog starts using real version number
-#%setup -q -n %{name}-%{version}
 
 %build
 true
@@ -66,6 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__mkdir} -p %{buildroot}%{_sysconfdir}/init.d
 %{__install} -m 755 %{SOURCE1} %{buildroot}%{_sysconfdir}/init.d/%{name}
 %{__install} -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
+%{__install} -m 644 %{SOURCE4}  %{buildroot}%{_sysconfdir}/logrotate.d/%name
 
 #Docs and other stuff
 %{__install} -p -m 644 COPYING %{buildroot}/opt/graylog2/server
@@ -106,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/graylog2/server/plugin
 %config(noreplace) %{_sysconfdir}/graylog2/server.conf
 %config(noreplace) %{_sysconfdir}/graylog2
+%config(noreplace) %{_sysconfdir}/logrotate.d/%name
 %doc README.markdown
 %defattr(-,graylog2,graylog2,-)
 /opt/graylog2/server/graylog2-server.jar
@@ -118,6 +122,15 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/graylog2
 
 %changelog
+* Mon Jun 02 2014 lee@leebriggs.co.uk 0.20.2
+- adding logrotate config
+* Wed Feb 26 2014 lee@leebriggs.co.uk 0.20.1
+- bugfix release 0.20.1
+* Wed Feb 19 2014 lee@leebriggs.co.uk 0.20.0
+- final release
+- added option for JAVA_EXTRA_ARGS
+* Fri Feb 14 2014 lee@leebriggs.co.uk 0.20.0-rc3
+- bump for new release
 * Mon Feb 10 2014 lee@leebriggs.co.uk 0.20.0-rc2
 - Some changes to the init script
 - Bumping for new release
