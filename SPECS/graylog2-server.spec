@@ -66,6 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 # sysconfig and init
 %{__mkdir} -p %{buildroot}%{_sysconfdir}/sysconfig
 %{__mkdir} -p %{buildroot}%{_sysconfdir}/init.d
+%{__mkdir} -p %{buildroot}%{_sysconfdir}/logrotate.d
 %{__install} -m 755 %{SOURCE1} %{buildroot}%{_sysconfdir}/init.d/%{name}
 %{__install} -m 755 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -m 644 %{SOURCE4}  %{buildroot}%{_sysconfdir}/logrotate.d/%name
