@@ -3,6 +3,8 @@ graylog2-server
 
 Graylog2 Server RPM packages
 
+**Deprecated:** This repository is deprecated in favour of the [official graylog2 server packages](http://docs.graylog.org/en/1.3/pages/installation/operating_system_packages.html)
+
 
 Releases
 =============
