@@ -3,14 +3,14 @@
 %define __jar_repack %{nil
 }
 Name:           graylog2-server
-Version:        0.20.2
+Version:        0.20.6
 Release:        1%{?dist}
 Summary:        graylog2-server
 
 Group:          System Environment/Daemons
 License:        ASL 2.0
 URL:            http://www.graylog2.org
-Source0:        graylog2-server-0.20.2.tgz
+Source0:        graylog2-server-0.20.6.tgz
 Source1:        init.d-%{name}
 Source2:        sysconfig-%{name}
 Source3:        log4j.xml
@@ -30,7 +30,7 @@ Requires(pre):  shadow-utils
 A distributed, highly available, RESTful search engine
 
 %prep
-%setup -q -n graylog2-server-0.20.2
+%setup -q -n graylog2-server-0.20.6
 #we have to use a specific name here until graylog starts using real version number
 
 %build
@@ -123,6 +123,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/graylog2
 
 %changelog
+* Fri Oct 03 2014 mail@rikbruggink.nl 0.20.6
+- new release
 * Mon Jun 02 2014 lee@leebriggs.co.uk 0.20.2
 - adding logrotate config
 * Wed Feb 26 2014 lee@leebriggs.co.uk 0.20.1
@@ -145,4 +147,3 @@ rm -rf $RPM_BUILD_ROOT
 - updated comments
 * Wed Dec 04 2013 lee@leebriggs.co.uk 0.20.0.07-1
 - Initial RPM
-
